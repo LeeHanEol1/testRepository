@@ -1,7 +1,6 @@
 package com.kh.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,20 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.service.BoardService;
-import com.kh.board.model.vo.Attachment;
-import com.kh.board.model.vo.Board;
+import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class PhotoListController
+ * Servlet implementation class ReplyInsertController
  */
-@WebServlet("/list.ph")
-public class PhotoListController extends HttpServlet {
+@WebServlet("/insert.re")
+public class ReplyInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PhotoListController() {
+    public ReplyInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,22 +30,29 @@ public class PhotoListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//selectAttachmentList 제목 조회수 파일경로 + 변경이름 조회해와서 사용자에게 띄워주기
-		//목록화면엔 대표이미지가 보여지게 작성할것
-		ArrayList<Board> list = new BoardService().selectAttachmentList();		
-		
-		request.setAttribute("atList", list);
-		
-		request.getRequestDispatcher("views/board/photoListView.jsp").forward(request, response);
-		
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		String replyData = request.getParameter("replyData");
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		
+		int result = new BoardService().insertReply(replyData, boardNo, userNo);
+		
+		if(result>0) {
+			
+		}else {
+			request.setAttribute("errorMsg", "댓글작성실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 }

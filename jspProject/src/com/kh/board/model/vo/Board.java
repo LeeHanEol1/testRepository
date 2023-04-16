@@ -13,11 +13,21 @@ public class Board {
 	private Date createDate;//	CREATE_DATE	DATE
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
 	
+	//대표이미지 경로+파일명(변경된) 담을 필드 하나 생성하기
+	private String titleImg;
+	
+	
+	
+
+
 	public Board() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	//사진 게시판 게시글 목록 조회해올 생성자
+	
+	
+	
 	public Board(int boardNo, String category, String boardTitle, String boardWriter, int count, Date createDate) {
 		super();
 		this.boardNo = boardNo;
@@ -27,6 +37,16 @@ public class Board {
 		this.count = count;
 		this.createDate = createDate;
 	}
+
+	public Board(int boardNo, String boardTitle, int count, String titleImg) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.count = count;
+		this.titleImg = titleImg;
+	}
+
+
 
 	public Board(int boardNo, int boardType, String category, String boardTitle, String boardContent,
 			String boardWriter, int count, Date createDate, String status) {
@@ -50,6 +70,13 @@ public class Board {
 		this.boardContent = boardContent;
 		this.boardWriter = boardWriter;
 		this.createDate = createDate;
+	}
+
+	public Board(int boardNo, String boardTitle, int count) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.count = count;
 	}
 
 	public int getBoardNo() {
@@ -124,6 +151,14 @@ public class Board {
 		this.status = status;
 	}
 
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
+	}
+	
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardType=" + boardType + ", category=" + category + ", boardTitle="

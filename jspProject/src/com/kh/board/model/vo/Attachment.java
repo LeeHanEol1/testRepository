@@ -12,9 +12,24 @@ public class Attachment {
 	private int fileLevel;//	FILE_LEVEL	NUMBER
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
 	
+	private String newPath;
+	
 	public Attachment() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Attachment(String newPath) {
+		super();
+		this.newPath = newPath;
+	}
+
+	public String getNewPath() {
+		return newPath;
+	}
+
+	public void setNewPath(String newPath) {
+		this.newPath = newPath;
 	}
 
 	public Attachment(int fileNo, int refBno, String originName, String changeName, String filePath, Date uploadDate,
@@ -28,6 +43,14 @@ public class Attachment {
 		this.uploadDate = uploadDate;
 		this.fileLevel = fileLevel;
 		this.status = status;
+	}
+
+	public Attachment(int fileNo, int refBno, String changeName, String filePath) {
+		super();
+		this.fileNo = fileNo;
+		this.refBno = refBno;
+		this.changeName = changeName;
+		this.filePath = filePath;
 	}
 
 	public Attachment(int fileNo, String originName, String changeName, String filePath) {

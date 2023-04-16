@@ -1,13 +1,13 @@
 package com.kh.board.model.service;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import com.kh.board.model.dao.BoardDao;
 import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 import com.kh.board.model.vo.Category;
+import com.kh.board.model.vo.Reply;
 import com.kh.common.JDBCTemplate;
 import com.kh.common.model.vo.PageInfo;
 
@@ -147,6 +147,70 @@ public class BoardService {
 		
 			
 		return result*result2;
+	}
+	//사진게시글 작성 메서드
+	public int insertPhotoBoard(Board b, ArrayList<Attachment> list) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().insertPhotoBoard(conn, b);
+		
+		int result2 = new BoardDao().insertAttachmentList(conn, list);
+		
+		if(result>0 && result2>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		//둘중 하나라도 0이라면 0 돌려주기
+		return result*result2;
+	}
+
+	public ArrayList<Board> selectAttachmentList() {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectAttachmentList(conn);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
+	public ArrayList<Attachment> selectPhotoDetail(int pno) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Attachment> list = new BoardDao().selectPhotoDetail(conn, pno);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
+	public int insertReply(String replyData, int boardNo, int userNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new BoardDao().insertReply(conn, replyData, boardNo, userNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(int boardNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		ArrayList<Reply> list = new BoardDao().selectReplyList(conn, boardNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
 	}
 
 }

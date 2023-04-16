@@ -93,5 +93,14 @@ public class MemberService {
 		
 		return result;
 	}
+	public boolean checkId(String checkId) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		boolean check = new MemberDao().checkId(conn, checkId);
+		
+		JDBCTemplate.close(conn);
+		
+		return check;
+	}
 
 }

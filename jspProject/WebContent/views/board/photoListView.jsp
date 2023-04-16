@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.board.model.vo.*"%>
+    <%
+    	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("atList");
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,17 +40,42 @@
 		<%} %>
 		
 		<div class="list-area">
-			<div class="thumbnail" align="center">
-				
-				<img width="200px" height="150px">
-				<p>
-					No.5<br>
-					조회수 : 14
-				</p>
-				
-			
-			</div>
+			<%for(Board b : list) {%>
+				<div class="thumbnail" align="center">
+					<input type="hidden" name="bno" value="<%=b.getBoardNo() %>">
+						<img src="<%=contextPath + b.getTitleImg() %>" width="200px" height="150px">
+						
+						<p>
+							No.<%=b.getBoardNo()+" " +b.getBoardTitle() %>
+							<br>
+							조회수 : <%=b.getCount() %>
+						</p>
+				</div>
+			<%} %>
 		</div>
+		<script>
+		
+			$(".list-area img").click(function(){
+				var str = $(this).next().text();
+				var str2 = str.trim().split(' ')[0];
+				var pno = str2.substr(3, str2.length);
+				location.href = '<%=contextPath%>/detail.ph?pno='+pno;
+			})
+			
+		</script>
+		
+		<script>
+		/*$(function(){
+				$(".thumbnail").click(function(){
+					console.log(213);
+					//console.log($(this).children("input[name=bno]").val());
+					location.href="<%=contextPath%>/detail.ph?pno="+$(this).children("input[name=bno]").val();
+				})
+			})*/
+				
+		</script>
+		
+		
 	</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.kh.member.model.dao;
+	package com.kh.member.model.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -209,6 +209,35 @@ public class MemberDao {
 		}
 		
 		return result;
+	}
+
+	public boolean checkId(Connection conn, String checkId) {
+		boolean check = false;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("checkId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, checkId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				check = true;
+			}else {
+				check = false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+
+		return check;
 	}
 
 }

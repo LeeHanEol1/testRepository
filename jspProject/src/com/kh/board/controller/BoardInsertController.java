@@ -85,7 +85,7 @@ public class BoardInsertController extends HttpServlet {
 			 * WebContent에 board_files 폴더 경로까지는 잡아주어야 한다 해당 폴더에 저장될것이기 때문에
 			 */
 			//경로 마지막에 / 붙여주기 (그 폴더안에 저장할것이기 때문에)
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/board_files/");
+			String savePath = request.getSession().getServletContext().getRealPath("/resources/photoBoard_files/");
 			
 			/*
 			 * 2.전달된 파일명 수정 및 서버에 업로드 작업
@@ -136,7 +136,7 @@ public class BoardInsertController extends HttpServlet {
 				at = new Attachment();
 				at.setOriginName(multiRequest.getOriginalFileName("upfile")); //원본명
 				at.setChangeName(multiRequest.getFilesystemName("upfile")); //수정명(실제 서버에 업로드된 파일명)
-				at.setFilePath("/resources/board_files");
+				at.setFilePath("/resources/photoBoard_files");
 			}
 			
 			//서비스에게 준비된 객체를 전달하며 서비스 요청하기
